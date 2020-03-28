@@ -13,19 +13,16 @@ Do something like this:
 
 .. code-block:: php
 
+use Ruth\RpcBundle\Controller\JsonRpcController;
+
 class VictoriousPuppyController extends JsonRpcController
 {
-    /**
-     * @Route("/rpc", methods={"POST"}, name="victorious_puppy_rpc")
-     */
+    /** @Route("/rpc", methods={"POST"}, name="victorious_puppy_rpc") */
     public function index(Request $request) : Response
     {
-        // Just invoke execute method to handle the procedure call.
-        // You can return it, or deal with the result to send to another service.
-        // Avoid polute the endpoint, since the resource it is the procedure/service itself.
         return $this->execute($request);
     }
-
+}
 
 Prerequisites
 -------------
