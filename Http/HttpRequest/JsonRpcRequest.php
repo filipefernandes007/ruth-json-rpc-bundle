@@ -31,6 +31,10 @@ class JsonRpcRequest {
             throw new JsonRpcRequestException("Invalid Request");
         }
 
+        if ((int) $this->originalRequestData['jsonrpc'] < 2) {
+            throw new JsonRpcRequestException("Invalid Request: json-rpc version is lower than 2.0");
+        }
+
         $this->method = $this->originalRequestData['method'];
         
         $explode = explode(':', $this->method);

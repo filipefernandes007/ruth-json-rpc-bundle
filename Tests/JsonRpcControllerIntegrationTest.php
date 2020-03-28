@@ -195,7 +195,7 @@ class JsonRpcControllerIntegrationTest extends \Symfony\Bundle\FrameworkBundle\T
             [],
             [],
             [],
-            '{"method":"ruth_rpc.service_test:foo","params":{"x":1,"y":2}}'
+            '{"method":"ruth_rpc.service_test:foo","params":{"x":1,"y":2},"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}'
         );
 
         $result = $this->controller->execute($request);
@@ -206,7 +206,33 @@ class JsonRpcControllerIntegrationTest extends \Symfony\Bundle\FrameworkBundle\T
         );
 
         $this->assertEquals(
-            '{"jsonrpc":"2.0","error":{"code":"-32700","message":"Parse error","data":"Invalid Request"},"id":null}',
+            '{"jsonrpc":"2.0","error":{"code":"-32700","message":"Parse error","data":"Invalid Request"},"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}',
+            $result->getContent()
+        );
+    }
+
+    public function testFailParseErrorJsonRpcVersionLoweThan2()
+    {
+        // Let's create a request
+        $request = Request::create(
+            '/test',
+            'POST',
+            [],
+            [],
+            [],
+            [],
+            '{"jsonrpc":"1.0","method":"ruth_rpc.service_test:foo","params":{"x":1,"y":2},"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}'
+        );
+
+        $result = $this->controller->execute($request);
+
+        $this->assertInstanceOf(
+            JsonRpcResponseError::class,
+            $result
+        );
+
+        $this->assertEquals(
+            '{"jsonrpc":"2.0","error":{"code":"-32700","message":"Parse error","data":"Invalid Request: json-rpc version is lower than 2.0"},"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}',
             $result->getContent()
         );
     }
@@ -221,7 +247,7 @@ class JsonRpcControllerIntegrationTest extends \Symfony\Bundle\FrameworkBundle\T
             [],
             [],
             [],
-            '{"method":"ruth_rpc.service_test:foo","id":"2957f28d-8797-42b1-bd5d-45834b3202d","params":{"x":1,"y":2}}'
+            '{"jsonrpc":"2.0","method":"ruth_rpc.service_test:foo","id":"2957f28d-8797-42b1-bd5d-45834b3202d","params":{"x":1,"y":2}}'
         );
 
         $result = $this->controller->execute($request);
