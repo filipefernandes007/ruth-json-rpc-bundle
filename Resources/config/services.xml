@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+                               http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Services -->
+        <service id="ruth_rpc.service_mediator" class="Ruth\RpcBundle\Service\ServiceMediator">
+            <argument key="$container" type="service" id="service_container"/>
+        </service>
+        <service id="ruth_rpc.service_test" class="Ruth\RpcBundle\Service\ServiceTest" public="true">
+        </service>
+
+        <!-- Alias for services -->
+        <service id="Ruth\RpcBundle\Service\ServiceMediator" alias="ruth_rpc.service_mediator" public="true" />
+        <service id="Ruth\RpcBundle\Service\ServiceTest" alias="ruth_rpc.service_test" public="true" />
+        <!-- End Service -->
+
+        <!-- Controller -->
+        <service id="ruth_rpc.json_rpc_controller" class="Ruth\RpcBundle\Controller\JsonRpcController" public="true">
+            <argument key="$logger" type="service" id="monolog.logger"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call> 
+        </service>
+
+        <service id="ruth_rpc.victorious_puppy" class="Ruth\RpcBundle\Controller\VictoriousPuppyController" public="true">
+            <argument key="$logger" type="service" id="monolog.logger"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call> 
+        </service>
+
+        <!-- Alias for your controllers -->
+        <service id="Ruth\RpcBundle\Controller\JsonRpcController" alias="ruth_rpc.json_rpc_controller" public="true"/>
+        <service id="Ruth\RpcBundle\Controller\VictoriousPuppyController" alias="ruth_rpc.victorious_puppy" public="true"/>
+        <!-- End Controller -->
+    </services>
+</container>

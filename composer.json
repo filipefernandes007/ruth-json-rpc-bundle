@@ -1,0 +1,54 @@
+{
+  "name": "ruth/json-rpc-bundle",
+  "type": "symfony-bundle",
+  "description": "Json RPC 2.0 implementation",
+  "keywords": ["json", "jsonrpc", "jsonrpc v2.0", "symfony", "symfony bundle"],
+  "homepage": "https://github.com/filipefernandes007/ruth-json-rpc-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Filipe Fernandes",
+      "email": "filipefernandes007@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.3",
+    "symfony/framework-bundle": ">=4.0",
+    "symfony/yaml": ">=4.0"
+  },
+  "require-dev": {
+    "symfony/phpunit-bridge": ">=4.0"
+  },
+  "config": {
+    "platform": {
+      "php": ">=7.3"
+    },
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Ruth\\RpcBundle\\": ""
+    },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Ruth\\RpcBundle\\Tests\\": "tests/"
+    }
+  },
+  "conflict": {
+    "symfony/symfony": "<4.0"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.1.x-dev"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
