@@ -11,11 +11,12 @@ in this bundle:
 
 Installation
 ------------
-
+```bash
 $ https://github.com/filipefernandes007/ruth-json-rpc-bundle
 $ cd ruth-json-rpc-bundle
 $ composer self-update
 $ composer install
+```
 
 License
 -------
