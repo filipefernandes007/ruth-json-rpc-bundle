@@ -1,4 +1,4 @@
-RuthRpcBundle
+RuthJsonRpcBundle
 ===================
 
 Documentation
@@ -26,7 +26,7 @@ This bundle is under the MIT license. See the complete license [in the bundle](L
 About
 -----
 
-RpcBundle is a [Filipe Fernandes](https://github.com/filipefernandes007/ruth-json-rpc-bundle) initiative.
+RuthJsonRpcBundle is a [Filipe Fernandes](https://github.com/filipefernandes007/ruth-json-rpc-bundle) initiative.
 
 Reporting an issue or a feature request
 ---------------------------------------
