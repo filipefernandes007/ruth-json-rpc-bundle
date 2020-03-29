@@ -16,8 +16,15 @@ in this bundle:
 
 [Read the Documentation](Resources/doc/index.rst)
 
-Installation
+Installation 
 ------------
+
+####As Application Bundle
+```bash
+$ composer require ruth/json-rpc-bundle
+```
+
+####Stand Alone
 ```bash
 $ git clone https://github.com/filipefernandes007/ruth-json-rpc-bundle
 $ cd ruth-json-rpc-bundle

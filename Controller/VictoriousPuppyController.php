@@ -20,9 +20,24 @@ class VictoriousPuppyController extends JsonRpcController
         return $this->execute($request);            
     }
 
+    /**
+     * @param Request $request
+     */
     protected function logRequest(Request $request) : void
     {
-        // Do more, like sending data to elastic or scalyr, or do nothing!
+        // You can do more than just log, by overriding logRequest,
+        // like sending data to elastic or scalyr, or do nothing!
         parent::logRequest($request);
+    }
+
+    /**
+     * @param Request $request
+     * @param array|null $result
+     */
+    protected function logResponse(Request $request, ?array $result): void
+    {
+        // You can do more than just log, by overriding logRequest,
+        // like sending data to elastic or scalyr, or do nothing!
+        parent::logResponse($request, $result);
     }
 }
