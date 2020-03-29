@@ -20,9 +20,6 @@
     "symfony/phpunit-bridge": ">=4.0"
   },
   "config": {
-    "platform": {
-      "php": "^7.3"
-    },
     "preferred-install": {
       "*": "dist"
     },
