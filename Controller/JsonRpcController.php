@@ -94,7 +94,7 @@ abstract class JsonRpcController implements ContainerAwareInterface
 
         if ($this->id === null) {
             // It's a notification: no response should be returned.
-            return new JsonRpcResponse(null, $this->result);
+            return new JsonRpcResponse(null);
         }
 
         return new JsonRpcResponse($this->jsonRpcRequest->getId(), $this->result);
