@@ -1,6 +1,6 @@
 <?php
 
-namespace Ruth\RpcBundle\Tests;
+namespace Ruth\RpcBundle\Tests\Integration;
 
 use Psr\Log\LoggerInterface;
 use Ruth\RpcBundle\Http\HttpResponse\JsonRpcResponseError;
@@ -11,7 +11,7 @@ use Ruth\RpcBundle\Http\HttpResponse\JsonRpcResponse;
 use Ruth\RpcBundle\Service\ServiceTest;
 use Symfony\Component\HttpFoundation\Request;
 
-class JsonRpcControllerIntegrationTest extends \Symfony\Bundle\FrameworkBundle\Test\WebTestCase
+class JsonRpcControllerTest extends \Symfony\Bundle\FrameworkBundle\Test\WebTestCase
 {
     /** @var VictoriousPuppyController */
     protected $controller;
