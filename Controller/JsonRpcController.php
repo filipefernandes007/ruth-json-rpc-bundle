@@ -63,9 +63,6 @@ abstract class JsonRpcController implements ContainerAwareInterface
 
             if (isset($data['id'])) {
                 $this->id = $data['id'];
-            } else {
-                // It's a notification: no response should be returned.
-                return new JsonRpcResponse(null);
             }
 
             $this->jsonRpcRequest = new JsonRpcRequest($request);
@@ -94,6 +91,11 @@ abstract class JsonRpcController implements ContainerAwareInterface
         }
 
         $this->logResponse($request, null);
+
+        if ($this->id === null) {
+            // It's a notification: no response should be returned.
+            return new JsonRpcResponse(null, $this->result);
+        }
 
         return new JsonRpcResponse($this->jsonRpcRequest->getId(), $this->result);
     }

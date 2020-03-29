@@ -4,10 +4,8 @@ namespace Ruth\RpcBundle\Tests;
 
 use Psr\Log\LoggerInterface;
 use Ruth\RpcBundle\Http\HttpResponse\JsonRpcResponseError;
-use Ruth\RpcBundle\Service\ServiceMediator;
 use Ruth\RpcBundle\Controller\JsonRpcController;
 use Ruth\RpcBundle\Controller\VictoriousPuppyController;
-use Ruth\RpcBundle\Http\HttpRequest\JsonRpcRequest;
 use Ruth\RpcBundle\Http\JsonRpc;
 use Ruth\RpcBundle\Http\HttpResponse\JsonRpcResponse;
 use Ruth\RpcBundle\Service\ServiceTest;
