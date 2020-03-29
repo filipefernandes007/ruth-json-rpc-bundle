@@ -19,12 +19,12 @@ in this bundle:
 Installation 
 ------------
 
-####As Application Bundle
+#### As Application Bundle
 ```bash
 $ composer require ruth/json-rpc-bundle
 ```
 
-####Stand Alone
+#### Stand Alone
 ```bash
 $ git clone https://github.com/filipefernandes007/ruth-json-rpc-bundle
 $ cd ruth-json-rpc-bundle
