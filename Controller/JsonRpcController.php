@@ -2,6 +2,7 @@
 
 namespace Ruth\RpcBundle\Controller;
 
+use PHPUnit\Util\Json;
 use Ruth\RpcBundle\Http\HttpRequest\JsonRpcRequest;
 use Ruth\RpcBundle\Http\HttpRequest\JsonRpcRequestException;
 use Ruth\RpcBundle\Http\HttpResponse\JsonRpcResponse;
@@ -62,6 +63,9 @@ abstract class JsonRpcController implements ContainerAwareInterface
 
             if (isset($data['id'])) {
                 $this->id = $data['id'];
+            } else {
+                // It's a notification: no response should be returned.
+                return new JsonRpcResponse(null);
             }
 
             $this->jsonRpcRequest = new JsonRpcRequest($request);
@@ -140,7 +144,7 @@ abstract class JsonRpcController implements ContainerAwareInterface
      */
     protected function errorResponseWithLog(Request $request, int $code, ?string $data = null) : JsonRpcResponseError
     {
-        $response = new JsonRpcResponseError($code, $this->id, $data);
+        $response = new JsonRpcResponseError($code, $data);
         $this->logResponse($request, $response->getResponse());
         return $response;
     }

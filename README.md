@@ -1,5 +1,12 @@
-RuthJsonRpcBundle
+RuthRpcBundle
 ===================
+
+About
+-----
+
+This bundle is an implementation of JSON-RPC 2.0 Specification [here](https://www.jsonrpc.org/specification).
+
+It's open for other types of implementations, but for now, it's strict to that.
 
 Documentation
 -------------
@@ -26,7 +33,7 @@ This bundle is under the MIT license. See the complete license [in the bundle](L
 About
 -----
 
-RuthJsonRpcBundle is a [Filipe Fernandes](https://github.com/filipefernandes007/ruth-json-rpc-bundle) initiative.
+RuthRpcBundle is a [Filipe Fernandes](https://github.com/filipefernandes007/ruth-json-rpc-bundle) initiative.
 
 Reporting an issue or a feature request
 ---------------------------------------

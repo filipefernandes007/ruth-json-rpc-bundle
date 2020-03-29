@@ -6,18 +6,28 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class JsonRpcResponse extends JsonResponse 
 {
+    /**
+     * JsonRpcResponse constructor.
+     * @param string|null $id
+     * @param mixed|null $data
+     */
     public function __construct(?string $id, $data = null) 
     {
-        $response = [
-            'jsonrpc' => '2.0',
-            'result' => $data,
-            'id' => $id
-        ];
-
         $headers = [
             'Content-Type' => 'application/json',
         ];
-         
-        parent::__construct(json_encode($response), 200, $headers, true);
+
+        // id null or empty? it's a notification: https://www.jsonrpc.org/specification#notification
+        if (empty($id)) {
+            $response = '';
+        } else {
+            $response = json_encode([
+                'jsonrpc' => '2.0',
+                'result'  => $data,
+                'id'      => $id
+            ]);
+        }
+
+        parent::__construct($response, 200, $headers, true);
     }
 }

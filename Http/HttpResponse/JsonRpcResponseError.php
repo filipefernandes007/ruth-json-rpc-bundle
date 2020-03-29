@@ -7,11 +7,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class JsonRpcResponseError extends JsonResponse 
 {
+    /** @var array */
     protected $response;
 
-    public function __construct(string $code, ?string $id, $data = null) 
+    /**
+     * JsonRpcResponseError constructor.
+     * @param int $code
+     * @param string|null $error
+     */
+    public function __construct(int $code, ?string $error = null)
     {
-        $this->response = $this->setResponseData($code, $id, $data);
+        $this->response = $this->setResponseErrorData($code, $error);
         $headers = [
             'Content-Type' => 'application/json',
         ];
@@ -19,6 +25,10 @@ class JsonRpcResponseError extends JsonResponse
         parent::__construct(json_encode($this->response), 200, $headers, true);   
     }
 
+    /**
+     * @param string $code
+     * @return array
+     */
     protected function getErrorOnCode(string $code) : array 
     {
         $message = '';
@@ -44,26 +54,32 @@ class JsonRpcResponseError extends JsonResponse
         return ['code' => $code, 'message' => $message];
     }
 
-    public function setResponseData(string $code, ?string $id, $data = null)
+    /**
+     * @param string $code
+     * @param string|null $data
+     * @return array
+     */
+    private function setResponseErrorData(string $code, string $data = null) : array
     {
-        if (\is_array($data) || \is_object($data)) {
-            $data = json_encode($data);
-        }
-
-        $response = array('jsonrpc' => '2.0');
-        $response['error'] = $this->getErrorOnCode($code);
-        $response['id']    = $id !== null ? $id : null;
+        $response = [
+            'jsonrpc' => '2.0', // 2.0 by default according to specification https://www.jsonrpc.org/specification#response_object
+            'error'   => $this->getErrorOnCode($code),
+            'id'      => null // null by default according to specification https://www.jsonrpc.org/specification#response_object
+        ];
 
         if ($data != null) {
             $response['error']['data'] = $data;
         }
 
-        $this->reponse = $response;
+        $this->response = $response;
 
         return $response;
     }
 
-    public function getResponse()
+    /**
+     * @return array
+     */
+    public function getResponse() : array
     {
         return $this->response;
     }

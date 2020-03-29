@@ -101,7 +101,7 @@ class JsonRpcControllerIntegrationTest extends \Symfony\Bundle\FrameworkBundle\T
         );
     }
 
-    public function testSuccessEvenWithWrongIdKeyProvided()
+    public function testSuccessNotificationWrongIdKeyProvided()
     {
         $data = '{"jsonrpc":"2.0","method":"ruth_rpc.service_test:foo","ideal":"2957f28d-8797-42b1-bd5d-45834b3202d","params":{"x":1,"y":2}}';
 
@@ -124,12 +124,12 @@ class JsonRpcControllerIntegrationTest extends \Symfony\Bundle\FrameworkBundle\T
         );
 
         $this->assertEquals(
-            '{"jsonrpc":"2.0","result":2,"id":null}',
+            '',
             $result->getContent()
         );
     }
 
-    public function testSuccessEvenWithNullId()
+    public function testSuccessNotificationWithNullId()
     {
         $data = '{"jsonrpc":"2.0","method":"ruth_rpc.service_test:foo","params":{"x":1,"y":2}}';
 
@@ -152,7 +152,7 @@ class JsonRpcControllerIntegrationTest extends \Symfony\Bundle\FrameworkBundle\T
         );
 
         $this->assertEquals(
-            '{"jsonrpc":"2.0","result":2,"id":null}',
+            '',
             $result->getContent()
         );
     }
@@ -206,7 +206,7 @@ class JsonRpcControllerIntegrationTest extends \Symfony\Bundle\FrameworkBundle\T
         );
 
         $this->assertEquals(
-            '{"jsonrpc":"2.0","error":{"code":"-32700","message":"Parse error","data":"Invalid Request"},"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}',
+            '{"jsonrpc":"2.0","error":{"code":"-32700","message":"Parse error","data":"Invalid Request"},"id":null}',
             $result->getContent()
         );
     }
@@ -232,7 +232,7 @@ class JsonRpcControllerIntegrationTest extends \Symfony\Bundle\FrameworkBundle\T
         );
 
         $this->assertEquals(
-            '{"jsonrpc":"2.0","error":{"code":"-32700","message":"Parse error","data":"Invalid Request: json-rpc version is lower than 2.0"},"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}',
+            '{"jsonrpc":"2.0","error":{"code":"-32700","message":"Parse error","data":"Invalid Request: json-rpc version is lower than 2.0"},"id":null}',
             $result->getContent()
         );
     }
@@ -258,7 +258,7 @@ class JsonRpcControllerIntegrationTest extends \Symfony\Bundle\FrameworkBundle\T
         );
 
         $this->assertEquals(
-            '{"jsonrpc":"2.0","error":{"code":"-32700","message":"Parse error","data":"Invalid Request: verb should be POST"},"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}',
+            '{"jsonrpc":"2.0","error":{"code":"-32700","message":"Parse error","data":"Invalid Request: verb should be POST"},"id":null}',
             $result->getContent()
         );
     }
@@ -286,7 +286,7 @@ class JsonRpcControllerIntegrationTest extends \Symfony\Bundle\FrameworkBundle\T
         );
 
         $this->assertEquals(
-            '{"jsonrpc":"2.0","error":{"code":"-32700","message":"Parse error","data":"Invalid Request"},"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}',
+            '{"jsonrpc":"2.0","error":{"code":"-32700","message":"Parse error","data":"Invalid Request"},"id":null}',
             $result->getContent()
         );
     }
@@ -314,7 +314,7 @@ class JsonRpcControllerIntegrationTest extends \Symfony\Bundle\FrameworkBundle\T
         );
 
         $this->assertEquals(
-            '{"jsonrpc":"2.0","error":{"code":"-32700","message":"Parse error","data":"Invalid Request"},"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}',
+            '{"jsonrpc":"2.0","error":{"code":"-32700","message":"Parse error","data":"Invalid Request"},"id":null}',
             $result->getContent()
         );
     }
@@ -346,7 +346,7 @@ class JsonRpcControllerIntegrationTest extends \Symfony\Bundle\FrameworkBundle\T
         );
 
         $this->assertEquals(
-            '{"jsonrpc":"2.0","error":{"code":"-32601","message":"Method not found"},"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}',
+            '{"jsonrpc":"2.0","error":{"code":"-32601","message":"Method not found"},"id":null}',
             $result->getContent()
         );
     }
@@ -374,7 +374,7 @@ class JsonRpcControllerIntegrationTest extends \Symfony\Bundle\FrameworkBundle\T
         );
 
         $this->assertEquals(
-            '{"jsonrpc":"2.0","error":{"code":"-32603","message":"Internal error","data":"Unable to invoke the callable because no value was given for parameter 1 ($x)"},"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}',
+            '{"jsonrpc":"2.0","error":{"code":"-32603","message":"Internal error","data":"Unable to invoke the callable because no value was given for parameter 1 ($x)"},"id":null}',
             $result->getContent()
         );
     }
@@ -402,7 +402,7 @@ class JsonRpcControllerIntegrationTest extends \Symfony\Bundle\FrameworkBundle\T
         );
 
         $this->assertEquals(
-            '{"jsonrpc":"2.0","error":{"code":"-32601","message":"Method not found"},"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}',
+            '{"jsonrpc":"2.0","error":{"code":"-32601","message":"Method not found"},"id":null}',
             $result->getContent()
         );
     }
