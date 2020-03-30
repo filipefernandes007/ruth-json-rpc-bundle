@@ -2,7 +2,7 @@ Getting Started With RuthRpcBundle
 ==================================
 
 This bundle allows you to implement any controller you want
-implementing json-rpc version 2.0.
+implementing json-rpc version 2.0 `see <https://www.jsonrpc.org/specification/>`.
 
 Installation
 ------------
@@ -80,6 +80,13 @@ You should call like this (just an example):
 .. code-block:: bash
 
     curl -X POST http://localhost:8083/rpc -d '{"jsonrpc":"2.0","method":"ruth_rpc.service_test:foo","id":"2957f28d-8797-42b1-bd5d-45834b3202d","params":{"x":1,"y":2}}'
+
+Every request should have specification mandatory fields.
+To specify service method you should place in *method* field as follows:
+
+<service alias>:<method name>.
+
+Service and method should be public.
 
 Prerequisites
 -------------

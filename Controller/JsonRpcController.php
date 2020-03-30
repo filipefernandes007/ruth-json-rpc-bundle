@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Invoker\Invoker;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 abstract class JsonRpcController implements ContainerAwareInterface
 {
@@ -49,12 +50,115 @@ abstract class JsonRpcController implements ContainerAwareInterface
      * @param Request $request
      * @return JsonResponse
      */
-    public function execute(Request $request) : JsonResponse 
+    public function execute(Request $request, bool $asYieldBatch = false) : JsonResponse
     {
         if ($this->disableProfiler && $this->container->has('profiler')) {
             $this->container->get('profiler')->disable();
         }
 
+        $content = $request->getContent();
+
+        try {
+            $data = json_decode(
+                $content,
+                false,
+                $depth = 512,
+                JSON_THROW_ON_ERROR,
+            );
+        } catch(\Exception $e) {
+            return $this->errorResponseWithLog(
+                $request,
+                self::PARSE_ERROR,
+                "Invalid request",
+            );
+        }
+
+        if (is_array($data)) {
+            $result = [];
+
+            if (!$asYieldBatch) {
+                $result = $this->batchProcess(
+                    $request,
+                    $data
+                );
+            } else {
+                $result = iterator_to_array(
+                    $this->batchProcessGenerator(
+                        $request,
+                        $data
+                    )
+                );
+            }
+
+            return new JsonResponse(
+                $result,
+                200
+            );
+        } else {
+            return $this->rpcCall($request);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param array $data
+     * @return array|\stdClass[]
+     */
+    protected function batchProcess(Request $request, array $data) : array
+    {
+        $result = [];
+
+        foreach($data as $value) {
+            $tmpRequest = Request::create(
+                $request->getUri(),
+                $request->getMethod(),
+                $request->request->all(),
+                [],
+                [],
+                [],
+                json_encode($value)
+            );
+
+            $result[] = json_decode($this->rpcCall($tmpRequest)->getContent());
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param Request $request
+     * @param array $data
+     * @return \Generator
+     */
+    protected function batchProcessGenerator(Request $request, array $data) : \Generator
+    {
+        $result = [];
+
+        foreach($data as $value) {
+            $tmpRequest = Request::create(
+                $request->getUri(),
+                $request->getMethod(),
+                $request->request->all(),
+                [],
+                [],
+                [],
+                json_encode($value)
+            );
+
+            yield ($result[] = json_decode($this->rpcCall($tmpRequest)->getContent()));
+        }
+
+        return $result;
+    }
+
+
+
+    /**
+     * @param Request $request
+     * @return JsonRpcResponse
+     */
+    protected function rpcCall(Request $request) : JsonResponse
+    {
         $this->logRequest($request);
 
         try {

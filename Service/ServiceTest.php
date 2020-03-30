@@ -34,4 +34,10 @@ class ServiceTest {
     {
         return $x * $y;
     }
+
+    public function sleep(int $time) : int {
+        \sleep($time);
+
+        return 1;
+    }
 }

@@ -9,7 +9,9 @@ use Ruth\RpcBundle\Controller\VictoriousPuppyController;
 use Ruth\RpcBundle\Http\JsonRpc;
 use Ruth\RpcBundle\Http\HttpResponse\JsonRpcResponse;
 use Ruth\RpcBundle\Service\ServiceTest;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class JsonRpcControllerTest extends \Symfony\Bundle\FrameworkBundle\Test\WebTestCase
 {
@@ -183,6 +185,98 @@ class JsonRpcControllerTest extends \Symfony\Bundle\FrameworkBundle\Test\WebTest
         );
     }
 
+    public function testSuccessBatch()
+    {
+        $jsonRpc1 = new JsonRpc(
+            "ruth_rpc.service_test:sleep",
+            [1],
+            "2957f28d-8797-42b1-bd5d-45834b3202d"
+        );
+
+        $jsonRpc2 = new JsonRpc(
+            "ruth_rpc.service_test:sleep",
+            [1],
+            "2957f28d-8797-42b1-bd5d-45834b3202d"
+        );
+
+        $jsonRpc3 = new JsonRpc(
+            "ruth_rpc.service_test:boo",
+            [],
+            "2957f28d-8797-42b1-bd5d-45834b3202d"
+        );
+
+        // Let's create a request
+        $request = Request::create(
+            '/test',
+            'POST',
+            [],
+            [],
+            [],
+            [],
+            json_encode([$jsonRpc1, $jsonRpc2, $jsonRpc3])
+        );
+
+        $result = $this->controller->execute($request, false);
+
+        $this->assertInstanceOf(
+            JsonResponse::class,
+            $result
+        );
+
+        $this->assertEquals(
+            '[{"jsonrpc":"2.0","result":1,"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}' .
+                     ',{"jsonrpc":"2.0","result":1,"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}' .
+                     ',{"jsonrpc":"2.0","result":1,"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}]',
+            $result->getContent()
+        );
+    }
+
+    public function testSuccessBatchYield()
+    {
+        $jsonRpc1 = new JsonRpc(
+            "ruth_rpc.service_test:sleep",
+            [1],
+            "2957f28d-8797-42b1-bd5d-45834b3202d"
+        );
+
+        $jsonRpc2 = new JsonRpc(
+            "ruth_rpc.service_test:sleep",
+            [1],
+            "2957f28d-8797-42b1-bd5d-45834b3202d"
+        );
+
+        $jsonRpc3 = new JsonRpc(
+            "ruth_rpc.service_test:boo",
+            [],
+            "2957f28d-8797-42b1-bd5d-45834b3202d"
+        );
+
+        // Let's create a request
+        $request = Request::create(
+            '/test',
+            'POST',
+            [],
+            [],
+            [],
+            [],
+            json_encode([$jsonRpc1, $jsonRpc2, $jsonRpc3])
+        );
+
+        $result = $this->controller->execute($request, true);
+
+        $this->assertInstanceOf(
+            JsonResponse::class,
+            $result
+        );
+
+        $this->assertEquals(
+            '[{"jsonrpc":"2.0","result":1,"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}' .
+                     ',{"jsonrpc":"2.0","result":1,"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}' .
+                     ',{"jsonrpc":"2.0","result":1,"id":"2957f28d-8797-42b1-bd5d-45834b3202d"}]',
+            $result->getContent()
+        );
+    }
+
     public function testFailParseErrorEmptyJsonRpcVersion()
     {
         // Let's create a request
@@ -209,7 +303,7 @@ class JsonRpcControllerTest extends \Symfony\Bundle\FrameworkBundle\Test\WebTest
         );
     }
 
-    public function testFailParseErrorJsonRpcVersionLoweThan2()
+    public function testFailParseErrorJsonRpcVersion()
     {
         // Let's create a request
         $request = Request::create(
@@ -230,7 +324,7 @@ class JsonRpcControllerTest extends \Symfony\Bundle\FrameworkBundle\Test\WebTest
         );
 
         $this->assertEquals(
-            '{"jsonrpc":"2.0","error":{"code":"-32700","message":"Parse error","data":"Invalid Request: json-rpc version is lower than 2.0"},"id":null}',
+            '{"jsonrpc":"2.0","error":{"code":"-32700","message":"Parse error","data":"Invalid Request: json-rpc version is not 2.0"},"id":null}',
             $result->getContent()
         );
     }

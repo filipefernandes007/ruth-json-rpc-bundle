@@ -6,7 +6,7 @@ use Ruth\RpcBundle\Http\HttpResponse\JsonRpcResponse;
 use Ruth\RpcBundle\Service\ServiceMediator;
 use Symfony\Component\DependencyInjection\Container;
 
-class JsonRpcResponseTest extends \Symfony\Bundle\FrameworkBundle\Test\WebTestCase
+class JsonRpcResponseTest extends \PHPUnit\Framework\TestCase
 {
     protected $containerMock;
 
