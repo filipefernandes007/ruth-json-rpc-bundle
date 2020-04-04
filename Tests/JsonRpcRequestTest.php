@@ -32,6 +32,7 @@ class JsonRpcRequestTest extends \PHPUnit\Framework\TestCase
         );
 
         $this->expectException(JsonRpcRequestException::class);
+        $this->expectExceptionMessage('Request content is null');
 
         new JsonRpcRequest($request);
     }
@@ -52,6 +53,7 @@ class JsonRpcRequestTest extends \PHPUnit\Framework\TestCase
         );
 
         $this->expectException(JsonRpcRequestException::class);
+        $this->expectExceptionMessage('Invalid Request: verb should be POST');
 
         new JsonRpcRequest($request);
     }
@@ -72,6 +74,7 @@ class JsonRpcRequestTest extends \PHPUnit\Framework\TestCase
         );
 
         $this->expectException(JsonRpcRequestException::class);
+        $this->expectExceptionMessage('Invalid Request');
 
         new JsonRpcRequest($request);
     }
@@ -92,6 +95,7 @@ class JsonRpcRequestTest extends \PHPUnit\Framework\TestCase
         );
 
         $this->expectException(JsonRpcRequestException::class);
+        $this->expectExceptionMessage('Invalid Request');
 
         new JsonRpcRequest($request);
     }
@@ -112,6 +116,7 @@ class JsonRpcRequestTest extends \PHPUnit\Framework\TestCase
         );
 
         $this->expectException(JsonRpcRequestException::class);
+        $this->expectExceptionMessage('Invalid Request: json-rpc version is not 2.0');
 
         new JsonRpcRequest($request);
     }
@@ -132,6 +137,7 @@ class JsonRpcRequestTest extends \PHPUnit\Framework\TestCase
         );
 
         $this->expectException(JsonRpcRequestException::class);
+        $this->expectExceptionMessage('Could not extract method');
 
         new JsonRpcRequest($request);
     }
@@ -152,6 +158,7 @@ class JsonRpcRequestTest extends \PHPUnit\Framework\TestCase
         );
 
         $this->expectException(JsonRpcRequestException::class);
+        $this->expectExceptionMessage('Could not extract method');
 
         new JsonRpcRequest($request);
     }
