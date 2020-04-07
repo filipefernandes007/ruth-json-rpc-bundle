@@ -46,8 +46,11 @@ Do something like this:
         {
             // Just invoke execute method to handle the procedure call.
             // You can return it, or deal with the result to send to another service.
-            // Avoid polute the endpoint, since the resource it is the procedure/service itself.
+            // Avoid pollute the endpoint, since the resource it is the procedure/service itself.
             return $this->execute($request); // just call execute
+
+            // or you can enable for yield batching
+            // return $this->controller->setYieldBatch(true)->execute($request);
         }
 
         /**

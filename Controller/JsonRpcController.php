@@ -41,6 +41,9 @@ abstract class JsonRpcController implements ContainerAwareInterface
     /** @var string|int|null */
     protected $id;
 
+    /** @var bool */
+    protected $yieldBatch = false;
+
     public function __construct(LoggerInterface $logger) 
     {    
         $this->logger = $logger;    
@@ -50,7 +53,7 @@ abstract class JsonRpcController implements ContainerAwareInterface
      * @param Request $request
      * @return JsonResponse
      */
-    public function execute(Request $request, bool $asYieldBatch = false) : JsonResponse
+    public function execute(Request $request) : JsonResponse
     {
         if ($this->disableProfiler && $this->container->has('profiler')) {
             $this->container->get('profiler')->disable();
@@ -76,7 +79,7 @@ abstract class JsonRpcController implements ContainerAwareInterface
         if (is_array($data)) {
             $result = [];
 
-            if (!$asYieldBatch) {
+            if (!$this->yieldBatch) {
                 $result = $this->batchProcess(
                     $request,
                     $data
@@ -150,8 +153,6 @@ abstract class JsonRpcController implements ContainerAwareInterface
 
         return $result;
     }
-
-
 
     /**
      * @param Request $request
@@ -280,5 +281,23 @@ abstract class JsonRpcController implements ContainerAwareInterface
         $data = preg_replace('/,*_+"/', ',"', $data);
 
         return json_decode($data, true);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isYieldBatch() : bool
+    {
+        return $this->yieldBatch;
+    }
+
+    /**
+     * @param bool $yieldBatch
+     * @return JsonRpcController
+     */
+    public function setYieldBatch(bool $yieldBatch) : JsonRpcController
+    {
+        $this->yieldBatch = $yieldBatch;
+        return $this;
     }
 }

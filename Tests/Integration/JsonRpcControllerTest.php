@@ -216,7 +216,7 @@ class JsonRpcControllerTest extends \Symfony\Bundle\FrameworkBundle\Test\WebTest
             json_encode([$jsonRpc1, $jsonRpc2, $jsonRpc3])
         );
 
-        $result = $this->controller->execute($request, false);
+        $result = $this->controller->execute($request);
 
         $this->assertInstanceOf(
             JsonResponse::class,
@@ -262,7 +262,7 @@ class JsonRpcControllerTest extends \Symfony\Bundle\FrameworkBundle\Test\WebTest
             json_encode([$jsonRpc1, $jsonRpc2, $jsonRpc3])
         );
 
-        $result = $this->controller->execute($request, true);
+        $result = $this->controller->setYieldBatch(true)->execute($request);
 
         $this->assertInstanceOf(
             JsonResponse::class,
