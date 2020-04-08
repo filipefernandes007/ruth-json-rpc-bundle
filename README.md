@@ -1,6 +1,12 @@
 RuthRpcBundle
 ===================
 
+[![Latest Stable Version](https://poser.pugx.org/ruth/json-rpc-bundle/v/stable)](https://packagist.org/packages/ruth/json-rpc-bundle)
+[![Total Downloads](https://poser.pugx.org/ruth/json-rpc-bundle/downloads)](https://packagist.org/packages/ruth/json-rpc-bundle)
+[![Latest Unstable Version](https://poser.pugx.org/ruth/json-rpc-bundle/v/unstable)](https://packagist.org/packages/ruth/json-rpc-bundle)
+[![License](https://poser.pugx.org/ruth/json-rpc-bundle/license)](https://packagist.org/packages/ruth/json-rpc-bundle)
+[![composer.lock](https://poser.pugx.org/ruth/json-rpc-bundle/composerlock)](https://packagist.org/packages/ruth/json-rpc-bundle)
+
 About
 -----
 
