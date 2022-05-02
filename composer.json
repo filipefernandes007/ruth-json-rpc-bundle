@@ -12,7 +12,9 @@
     }
   ],
   "require": {
+    "ext-json": "*",
     "php": "^7.3",
+    "php-di/invoker": "^2.3",
     "symfony/framework-bundle": ">=4.0",
     "symfony/yaml": ">=4.0"
   },
